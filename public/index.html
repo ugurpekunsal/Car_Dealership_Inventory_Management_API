@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Car Dealership Management</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <div class="container">
+        <nav class="tabs">
+            <button class="tab-btn active" data-tab="inventory">Inventory</button>
+            <button class="tab-btn" data-tab="clients">Clients</button>
+            <button class="tab-btn" data-tab="sales">Sales</button>
+        </nav>
+
+        <div class="tab-content active" id="inventory">
+            <div class="form-container">
+                <h2>Add New Car</h2>
+                <form id="addCarForm">
+                    <div class="form-grid">
+                        <input type="text" id="make" placeholder="Make" required>
+                        <input type="text" id="model" placeholder="Model" required>
+                        <input type="number" id="year" placeholder="Year" required>
+                        <input type="number" id="price" placeholder="Price" step="0.01" required>
+                    </div>
+                    <button type="submit">Add Car</button>
+                </form>
+            </div>
+            <div id="carList" class="card-grid"></div>
+        </div>
+
+        <div class="tab-content" id="clients">
+            <div class="form-container">
+                <h2>Add New Client</h2>
+                <form id="addClientForm">
+                    <div class="form-grid">
+                        <input type="text" id="clientName" placeholder="Full Name" required>
+                        <input type="email" id="clientEmail" placeholder="Email" required>
+                        <input type="tel" id="clientPhone" placeholder="Phone" required>
+                        <input type="text" id="clientAddress" placeholder="Address" required>
+                    </div>
+                    <button type="submit">Add Client</button>
+                </form>
+            </div>
+            <div id="clientList" class="card-grid"></div>
+        </div>
+
+        <div class="tab-content" id="sales">
+            <div class="sales-container">
+                <h2>Sales History</h2>
+                <div id="salesList" class="sales-grid">
+                    <!-- Sales history will be populated here -->
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="app.js"></script>
+    <!-- Modal for client selection -->
+    <div id="clientSelectionModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Select Client</h2>
+                <span class="close">&times;</span>
+            </div>
+            <div class="modal-body">
+                <table id="clientSelectionTable">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Phone</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
