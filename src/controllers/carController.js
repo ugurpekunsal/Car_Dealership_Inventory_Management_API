@@ -11,7 +11,7 @@ const {
 
 const client = new DynamoDBClient({});
 const docClient = DynamoDBDocumentClient.from(client);
-const TABLE_NAME = process.env.TABLE_NAME;
+const TABLE_NAME = process.env.TABLE_NAME; // Ensure this is set to "Cars"
 
 const carController = {
 	// Get all cars
@@ -159,7 +159,26 @@ const carController = {
 				expressionAttributeValues[":make"] = make;
 				expressionAttributeNames["#make"] = "make";
 			}
-			// Add similar blocks for model, price range, status
+			if (model) {
+				filterExpression.push("#model = :model");
+				expressionAttributeValues[":model"] = model;
+				expressionAttributeNames["#model"] = "model";
+			}
+			if (minPrice) {
+				filterExpression.push("#price >= :minPrice");
+				expressionAttributeValues[":minPrice"] = parseFloat(minPrice);
+				expressionAttributeNames["#price"] = "price";
+			}
+			if (maxPrice) {
+				filterExpression.push("#price <= :maxPrice");
+				expressionAttributeValues[":maxPrice"] = parseFloat(maxPrice);
+				expressionAttributeNames["#price"] = "price";
+			}
+			if (status) {
+				filterExpression.push("#status = :status");
+				expressionAttributeValues[":status"] = status;
+				expressionAttributeNames["#status"] = "status";
+			}
 
 			const command = new ScanCommand({
 				TableName: TABLE_NAME,

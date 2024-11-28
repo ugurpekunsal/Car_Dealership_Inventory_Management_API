@@ -10,7 +10,10 @@ document.addEventListener("DOMContentLoaded", () => {
 	// Function definitions
 	async function loadCars() {
 		try {
-			const response = await fetch("/api/cars");
+			const response = await fetch("/car-dealership-api/cars");
+			if (!response.ok) {
+				throw new Error(`HTTP error! status: ${response.status}`);
+			}
 			const cars = await response.json();
 			displayCars(cars);
 		} catch (error) {
@@ -21,7 +24,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
 	async function loadClients() {
 		try {
-			const response = await fetch("/api/clients");
+			const response = await fetch("/car-dealership-api/clients");
+			if (!response.ok) {
+				throw new Error(`HTTP error! status: ${response.status}`);
+			}
 			const clients = await response.json();
 			displayClients(clients);
 		} catch (error) {
@@ -128,7 +134,7 @@ document.addEventListener("DOMContentLoaded", () => {
 		};
 
 		try {
-			const response = await fetch("/api/cars", {
+			const response = await fetch("/car-dealership-api/cars", {
 				method: "POST",
 				headers: { "Content-Type": "application/json" },
 				body: JSON.stringify(carData),
@@ -138,11 +144,12 @@ document.addEventListener("DOMContentLoaded", () => {
 				addCarForm.reset();
 				loadCars();
 			} else {
-				throw new Error("Failed to add car");
+				const errorData = await response.json();
+				throw new Error(errorData.error || "Failed to add car");
 			}
 		} catch (error) {
 			console.error("Error:", error);
-			alert("Failed to add car");
+			alert("Failed to add car: " + error.message);
 		}
 	});
 
@@ -156,7 +163,7 @@ document.addEventListener("DOMContentLoaded", () => {
 		};
 
 		try {
-			const response = await fetch("/api/clients", {
+			const response = await fetch("/car-dealership-api/clients", {
 				method: "POST",
 				headers: { "Content-Type": "application/json" },
 				body: JSON.stringify(clientData),
@@ -166,11 +173,12 @@ document.addEventListener("DOMContentLoaded", () => {
 				addClientForm.reset();
 				loadClients();
 			} else {
-				throw new Error("Failed to add client");
+				const errorData = await response.json();
+				throw new Error(errorData.error || "Failed to add client");
 			}
 		} catch (error) {
 			console.error("Error:", error);
-			alert("Failed to add client");
+			alert("Failed to add client: " + error.message);
 		}
 	});
 
@@ -196,7 +204,7 @@ document.addEventListener("DOMContentLoaded", () => {
 				updateData.clientId = clientId;
 			}
 
-			const response = await fetch(`/api/cars/${carId}`, {
+			const response = await fetch(`/car-dealership-api/cars/${carId}`, {
 				method: "PUT",
 				headers: {
 					"Content-Type": "application/json",
@@ -207,11 +215,12 @@ document.addEventListener("DOMContentLoaded", () => {
 			if (response.ok) {
 				loadCars();
 			} else {
-				throw new Error("Failed to update car status");
+				const errorData = await response.json();
+				throw new Error(errorData.error || "Failed to update car status");
 			}
 		} catch (error) {
 			console.error("Error:", error);
-			alert("Failed to update car status");
+			alert("Failed to update car status: " + error.message);
 		}
 	}
 
@@ -219,7 +228,7 @@ document.addEventListener("DOMContentLoaded", () => {
 	async function deleteCar(carId) {
 		if (confirm("Are you sure you want to delete this car?")) {
 			try {
-				const response = await fetch(`/api/cars/${carId}`, {
+				const response = await fetch(`/car-dealership-api/cars/${carId}`, {
 					method: "DELETE",
 				});
 
@@ -227,11 +236,12 @@ document.addEventListener("DOMContentLoaded", () => {
 					loadCars(); // Reload the car list
 					updateSalesSelects(); // Update the sales dropdown if it exists
 				} else {
-					throw new Error("Failed to delete car");
+					const errorData = await response.json();
+					throw new Error(errorData.error || "Failed to delete car");
 				}
 			} catch (error) {
 				console.error("Error:", error);
-				alert("Failed to delete car");
+				alert("Failed to delete car: " + error.message);
 			}
 		}
 	}
@@ -240,7 +250,7 @@ document.addEventListener("DOMContentLoaded", () => {
 	async function deleteClient(clientId) {
 		if (confirm("Are you sure you want to delete this client?")) {
 			try {
-				const response = await fetch(`/api/clients/${clientId}`, {
+				const response = await fetch(`/car-dealership-api/clients/${clientId}`, {
 					method: "DELETE",
 				});
 
@@ -248,11 +258,12 @@ document.addEventListener("DOMContentLoaded", () => {
 					loadClients(); // Reload the client list
 					updateSalesSelects(); // Update the sales dropdown if it exists
 				} else {
-					throw new Error("Failed to delete client");
+					const errorData = await response.json();
+					throw new Error(errorData.error || "Failed to delete client");
 				}
 			} catch (error) {
 				console.error("Error:", error);
-				alert("Failed to delete client");
+				alert("Failed to delete client: " + error.message);
 			}
 		}
 	}
@@ -266,7 +277,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 		try {
 			// Load available cars
-			const carsResponse = await fetch("/api/cars");
+			const carsResponse = await fetch("/car-dealership-api/cars");
 			const cars = await carsResponse.json();
 
 			carSelect.innerHTML = '<option value="">Select a Car</option>';
@@ -281,7 +292,7 @@ document.addEventListener("DOMContentLoaded", () => {
 				});
 
 			// Load all clients
-			const clientsResponse = await fetch("/api/clients");
+			const clientsResponse = await fetch("/car-dealership-api/clients");
 			const clients = await clientsResponse.json();
 
 			clientSelect.innerHTML = '<option value="">Select a Client</option>';
@@ -314,7 +325,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 			try {
 				// Update car status to sold
-				const response = await fetch(`/api/cars/${carId}`, {
+				const response = await fetch(`/car-dealership-api/cars/${carId}`, {
 					method: "PUT",
 					headers: {
 						"Content-Type": "application/json",
@@ -331,11 +342,12 @@ document.addEventListener("DOMContentLoaded", () => {
 					loadCars();
 					updateSalesSelects();
 				} else {
-					throw new Error("Failed to record sale");
+					const errorData = await response.json();
+					throw new Error(errorData.error || "Failed to record sale");
 				}
 			} catch (error) {
 				console.error("Error:", error);
-				alert("Failed to record sale");
+				alert("Failed to record sale: " + error.message);
 			}
 		});
 
@@ -367,7 +379,7 @@ document.addEventListener("DOMContentLoaded", () => {
 		tbody.innerHTML = '<tr><td colspan="4">Loading clients...</td></tr>';
 
 		try {
-			const response = await fetch("/api/clients");
+			const response = await fetch("/car-dealership-api/clients");
 			const clients = await response.json();
 
 			tbody.innerHTML = "";
@@ -414,7 +426,7 @@ document.addEventListener("DOMContentLoaded", () => {
 	// Add these functions to your existing code
 	async function loadSales() {
 		try {
-			const response = await fetch("/api/cars");
+			const response = await fetch("/car-dealership-api/cars");
 			const cars = await response.json();
 			const soldCars = cars.filter((car) => car.status === "sold");
 			displaySales(soldCars);

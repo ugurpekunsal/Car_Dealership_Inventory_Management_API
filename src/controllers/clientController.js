@@ -10,7 +10,7 @@ const {
 
 const client = new DynamoDBClient({});
 const docClient = DynamoDBDocumentClient.from(client);
-const TABLE_NAME = "Clients";
+const TABLE_NAME = process.env.CLIENT_TABLE_NAME || "Clients"; // Use environment variable or default to "Clients"
 
 const clientController = {
 	// Get all clients

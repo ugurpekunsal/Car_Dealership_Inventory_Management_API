@@ -34,9 +34,9 @@ app.get("/health", (req, res) => {
 	res.status(200).json({ status: "OK", message: "Server is running" });
 });
 
-// Routes
-app.use("/api/cars", carRoutes);
-app.use("/api/clients", clientRoutes);
+// Routes - Updated to include '/car-dealership-api' prefix
+app.use("/car-dealership-api/cars", carRoutes);
+app.use("/car-dealership-api/clients", clientRoutes);
 
 // Error handling middleware
 app.use((err, req, res, next) => {
