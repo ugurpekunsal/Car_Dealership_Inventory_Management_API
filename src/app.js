@@ -38,6 +38,9 @@ app.get("/health", (req, res) => {
 app.use("/car-dealership-api/cars", carRoutes);
 app.use("/car-dealership-api/clients", clientRoutes);
 
+// API Portal route
+app.use("/api-docs", express.static("public/portal"));
+
 // Error handling middleware
 app.use((err, req, res, next) => {
 	console.error(err.stack);

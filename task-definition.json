@@ -1,0 +1,38 @@
+{
+	"family": "car-dealership-api",
+	"networkMode": "awsvpc",
+	"requiresCompatibilities": ["FARGATE"],
+	"cpu": "256",
+	"memory": "512",
+	"executionRoleArn": "arn:aws:iam::820242903063:role/ecsTaskExecutionRole",
+	"containerDefinitions": [
+		{
+			"name": "car-dealership-api",
+			"image": "820242903063.dkr.ecr.ca-central-1.amazonaws.com/car-dealership-api:latest",
+			"portMappings": [
+				{
+					"containerPort": 3000,
+					"protocol": "tcp"
+				}
+			],
+			"environment": [
+				{
+					"name": "NODE_ENV",
+					"value": "production"
+				},
+				{
+					"name": "TABLE_NAME",
+					"value": "Cars"
+				}
+			],
+			"logConfiguration": {
+				"logDriver": "awslogs",
+				"options": {
+					"awslogs-group": "ecs/car-dealership-api",
+					"awslogs-region": "ca-central-1",
+					"awslogs-stream-prefix": "ecs"
+				}
+			}
+		}
+	]
+}

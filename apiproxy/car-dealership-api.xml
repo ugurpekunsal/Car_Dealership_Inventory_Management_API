@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<APIProxy revision="1" name="car-dealership-api">
+    <Basepaths>/v1/car-dealership</Basepaths>
+    <ConfigurationVersion majorVersion="4" minorVersion="0"/>
+    <Description>Car Dealership API Proxy</Description>
+    <DisplayName>Car Dealership API</DisplayName>
+    <Policies>
+        <Policy>Verify-API-Key</Policy>
+        <Policy>Remove-Query-Param-API-Key</Policy>
+    </Policies>
+    <ProxyEndpoints>
+        <ProxyEndpoint>default</ProxyEndpoint>
+    </ProxyEndpoints>
+    <Resources/>
+    <Spec></Spec>
+    <TargetServers/>
+    <TargetEndpoints>
+        <TargetEndpoint>default</TargetEndpoint>
+    </TargetEndpoints>
+</APIProxy> 

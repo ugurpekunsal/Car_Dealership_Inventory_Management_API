@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Car Dealership API Portal</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .endpoint {
+            background: #f5f5f5;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 5px;
+        }
+
+        .method {
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 3px;
+            color: white;
+            font-weight: bold;
+        }
+
+        .get {
+            background: #61affe;
+        }
+
+        .post {
+            background: #49cc90;
+        }
+
+        .put {
+            background: #fca130;
+        }
+
+        .delete {
+            background: #f93e3e;
+        }
+
+        .patch {
+            background: #50e3c2;
+        }
+
+        pre {
+            background: #272822;
+            color: #f8f8f2;
+            padding: 10px;
+            border-radius: 5px;
+            overflow-x: auto;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Car Dealership API Documentation</h1>
+
+    <h2>Authentication</h2>
+    <p>All API calls require an API key in the header:</p>
+    <pre>x-api-key: your_api_key_here</pre>
+
+    <h2>Endpoints</h2>
+
+    <div class="endpoint">
+        <span class="method get">GET</span>
+        <code>/car-dealership-api/cars</code>
+        <p>Get all cars</p>
+        <h4>Example Response:</h4>
+        <pre>
+[
+    {
+        "id": "CAR_123",
+        "make": "Toyota",
+        "model": "Camry",
+        "year": 2022,
+        "price": 25000,
+        "status": "available"
+    }
+]</pre>
+    </div>
+
+    <div class="endpoint">
+        <span class="method get">GET</span>
+        <code>/car-dealership-api/cars/{id}</code>
+        <p>Get car by ID</p>
+    </div>
+
+    <div class="endpoint">
+        <span class="method post">POST</span>
+        <code>/car-dealership-api/cars</code>
+        <p>Create a new car</p>
+        <h4>Request Body:</h4>
+        <pre>
+{
+    "make": "Toyota",
+    "model": "Camry",
+    "year": 2022,
+    "price": 25000
+}</pre>
+    </div>
+
+    <div class="endpoint">
+        <span class="method put">PUT</span>
+        <code>/car-dealership-api/cars/{id}</code>
+        <p>Update a car</p>
+    </div>
+
+    <div class="endpoint">
+        <span class="method patch">PATCH</span>
+        <code>/car-dealership-api/cars/{id}</code>
+        <p>Partially update a car</p>
+    </div>
+
+    <div class="endpoint">
+        <span class="method delete">DELETE</span>
+        <code>/car-dealership-api/cars/{id}</code>
+        <p>Delete a car</p>
+    </div>
+
+    <h2>Code Examples</h2>
+    <h3>JavaScript</h3>
+    <pre>
+// Get all cars
+const response = await fetch('/car-dealership-api/cars', {
+    headers: {
+        'x-api-key': 'your_api_key_here'
+    }
+});
+const cars = await response.json();</pre>
+
+    <h3>Python</h3>
+    <pre>
+import requests
+
+headers = {
+    'x-api-key': 'your_api_key_here'
+}
+response = requests.get('http://your-api-url/car-dealership-api/cars', headers=headers)
+cars = response.json()</pre>
+</body>
+
+</html>

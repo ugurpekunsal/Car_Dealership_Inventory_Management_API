@@ -7,14 +7,25 @@ const {
 	updateCar,
 	deleteCar,
 	searchCars,
+	patchCar,
 } = require("../controllers/carController");
+const apiKeyAuth = require("../middleware/apiKeyAuth");
 
-// Get all cars with optional search/filter
-router.get("/search", searchCars);
+// Apply to all routes
+router.use(apiKeyAuth);
+
 router.get("/", getAllCars);
+
 router.get("/:id", getCarById);
+
 router.post("/", createCar);
+
 router.put("/:id", updateCar);
+
 router.delete("/:id", deleteCar);
+
+router.get("/search", searchCars);
+
+router.patch("/:id", patchCar);
 
 module.exports = router;
