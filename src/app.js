@@ -3,6 +3,9 @@ const cors = require("cors");
 const helmet = require("helmet");
 const morgan = require("morgan");
 require("dotenv").config();
+console.log("DynamoDB Table Name:", process.env.TABLE_NAME);
+console.log("AWS Region:", process.env.AWS_REGION);
+
 
 const app = express();
 
@@ -54,11 +57,12 @@ app.use((req, res) => {
 
 const PORT = process.env.PORT || 3000;
 
-app.listen(PORT, () => {
-	console.log(`Server is running on port ${PORT}`);
-	console.log(`Health check available at http://localhost:${PORT}/health`);
-	console.log("DynamoDB Table Name:", process.env.TABLE_NAME);
+app.listen(PORT, "0.0.0.0", () => {
+    console.log(`Server is running on port ${PORT}`);
+    console.log(`Health check available at http://localhost:${PORT}/car-dealership-api/health`);
+    console.log("DynamoDB Table Name:", process.env.TABLE_NAME);
 });
+
 
 // Handle unhandled promise rejections
 process.on("unhandledRejection", (err) => {
@@ -66,3 +70,4 @@ process.on("unhandledRejection", (err) => {
 });
 
 module.exports = app;
+
